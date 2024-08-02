@@ -13,7 +13,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 dotenv.config();
 
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use("/api", crudroutes);
 app.use(express.static("public"));
