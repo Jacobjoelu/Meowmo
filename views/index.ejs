@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meowmo</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    />
+    <!-- <nav
+      class="bg-yellow-200 h-screen w-52 flex flex-col justify-start items-stretch"
+    >
+      <ul class="space-y-4 w-full">
+        <li class="bg-green-200 pl-4 py-2 rounded-r-full cursor-pointer w-1/2">
+          Home
+        </li>
+        <li
+          class="bg-green-200 pl-4 py-2 rounded-r-full cursor-pointer w-1/2 focus:text-center"
+        >
+          Archive
+        </li>
+        <li class="bg-green-200 pl-4 py-2 rounded-r-full cursor-pointer w-1/2">
+          Deleted
+        </li>
+      </ul>
+    </nav> -->
+
+    <!-- Main content -->
+  </head>
+  <body class="p-8 bg-gray-600 flex flex-col h-screen">
+    <!-- Sidebar -->
+    <div>
+      <button class="focus:outline-none text-white">
+        <svg
+          class="h-6 w-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16m-7 6h7"
+          ></path>
+        </svg>
+      </button>
+    </div>
+    <div class="p-4 flex items-center justify-center flex-col">
+      <!-- search button -->
+      <div class="w-1/2">
+        <input
+          type="text"
+          class="ml-4 flex-grow p-2 rounded-lg bg-gray-200 w-full placeholder:pl-2 focus:outline-none"
+          id="add"
+          placeholder="add note..."
+        />
+      </div>
+    </div>
+    <div id="note-form" class="hidden"><%- include('makenote') %></div>
+
+    <!-- Notes Section -->
+    <section class="grid grid-cols-4 items-center">
+      <%- include('note') %>
+    </section>
+    <script src="main.js"></script>
+  </body>
+</html>

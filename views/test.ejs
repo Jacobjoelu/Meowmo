@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Notes App</title>
+  </head>
+  <body>
+    <h1>Welcome to the Notes App</h1>
+    <div id="notes">
+      <% notes.forEach(note => { %>
+      <div class="note">
+        <h2><%= note.title %></h2>
+        <p><%= note.content %></p>
+      </div>
+      <% }); %>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+    <% if(notes.length>=0){notes.forEach(note => { %>
+    <div class="rounded-lg p-2 bg-yellow-200 w-60">
+      <p id="title" class="text-sm"><%= note.title %></p>
+      <hr class="border-t-2 border-transparent border-gray-200 my-2" />
+      <p id="content" class="text-sm"><%= note.content %></p>
+    </div>
+    <button
+      id="delete-btn"
+      class="m-3 bg-yellow-600 text-white px-2 py-1 rounded-lg text-center absolute bottom-0 right-0"
+    >
+      <span class="material-symbols-sharp"> delete </span>
+    </button>
+    <% })}; %>
+  </body>
+</html>
