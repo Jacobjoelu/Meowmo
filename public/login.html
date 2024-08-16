@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <title>Login to Meomo</title>
+  </head>
+  <body class="font-['Poppins',sans-serif] m-0 p-0 box-border w-full h-full">
+    <div class="h-screen w-full bg-[#161623] flex items-center justify-center">
+      <form
+        class="relative w-[22.5rem] h-[30rem] m-[1.875rem] shadow-[1.25rem_1.25rem_3.125rem_rgba(0,0,0,0.5)] rounded-[0.9375rem] bg-[rgba(255,255,255,0.1)] overflow-hidden flex flex-col items-center justify-center border-t border-l border-[rgba(255,255,255,0.5)] backdrop-blur-[0.3125rem] z-10"
+        method="post"
+        action="/login"
+      >
+        <h1 class="text-white mb-[21.875rem] text- absolute">Login</h1>
+        <div class="flex justify-center flex-col mb-20">
+          <input
+            class="mt-[1.5625rem] p-[0.625rem] w-[14.375rem] border-none shadow-[1.25rem_1.25rem_3.125rem_rgba(0,0,0,0.5)] rounded-[0.625rem] bg-[rgba(255,255,255,0.1)] border-t border-l border-[rgba(255,255,255,0.5)] backdrop-blur-[0.3125rem] z-10 text-white placeholder-white placeholder-opacity-50 focus:outline-none"
+            type="email"
+            placeholder="email"
+            name="email"
+            required
+          />
+          <input
+            class="mt-[1.5625rem] p-[0.625rem] w-[14.375rem] border-none shadow-[1.25rem_1.25rem_3.125rem_rgba(0,0,0,0.5)] rounded-[0.625rem] bg-[rgba(255,255,255,0.1)] border-t border-l border-[rgba(255,255,255,0.5)] backdrop-blur-[0.3125rem] z-10 text-white placeholder-white placeholder-opacity-50 focus:outline-none"
+            type="password"
+            placeholder="Password"
+            name="password"
+            required
+          />
+        </div>
+        <button
+          class="relative inline-block border-none rounded-[3.125rem] bg-none py-[1.5625rem] px-[4.6875rem] m-[1.875rem]"
+          type="submit"
+        >
+          <span
+            class="absolute left-0 top-0 w-full h-full flex justify-center items-center bg-[rgba(255,255,255,0.05)] shadow-[0_0.9375rem_2.1875rem_rgba(0,0,0,0.2)] border-t border-b border-[rgba(255,255,255,0.1)] rounded-[1.875rem] text-white z-10 font-normal tracking-widest no-underline overflow-hidden uppercase backdrop-blur-[0.9375rem]"
+          >
+            Login
+          </span>
+        </button>
+      </form>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.0/vanilla-tilt.min.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
