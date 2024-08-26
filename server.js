@@ -1,10 +1,12 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import mongoose from "mongoose";
 import path from "path";
 import { fileURLToPath } from "url";
 import dotenv from "dotenv";
 import cookieparser from "cookie-parser";
+import userroutes from "./routes/user.routes.js";
 import authMiddleware from "./middleware/auth.middleware.js";
+import bodyParser from "body-parser";
 
 //declarations
 const __filename = fileURLToPath(import.meta.url);
@@ -15,8 +17,10 @@ dotenv.config();
 
 //middleware
 app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "./public")));
 app.use(cookieparser());
+app.use("/api", userroutes);
 
 //mongoose
 mongoose
@@ -28,12 +32,13 @@ mongoose
 
 //server routes
 app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "/login.html"));
+  res.sendFile(path.join(__dirname, "/public", "/signup.html"));
 });
 
 //for
-app.get("/api", authMiddleware, (req, res) => res.render("notes"));
+// app.get("/api", authMiddleware, (req, res) => res.render("notes"));
 
 //port
-app.listen(port);
-console.log(`Server started at ${port}`);
+app.listen(port, () => {
+  console.log(`Server started at ${port}`);
+});
