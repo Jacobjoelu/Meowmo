@@ -8,6 +8,7 @@ dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const projectRoot = path.join(__dirname, "..");
 
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
@@ -41,8 +42,9 @@ const loginSend = async (req, res) => {
     const userLogin = await User.login(email, password);
     const token = createToken(userLogin._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
-    res.status(200).json({ user: userLogin._id });
-    console.log(`${userLogin} success`);
+    res.status(200).redirect("/");
+
+    console.log(`${userLogin.email} logged in successfully`);    
   } catch (err) {
     console.log(err.message);
     res.status(400).json({ error: err.message, code: err.code });
@@ -50,9 +52,14 @@ const loginSend = async (req, res) => {
 };
 
 const loginGet = (req, res) => {
-  res.sendfile(__dirname, "./public", "login");
+  res.sendFile(path.join(projectRoot, "public", "login.html"));
 };
+
 const signupGet = (req, res) => {
-  res.sendfile(__dirname, "./public", "signup");
+  res.sendFile(path.join(projectRoot, "public", "signup.html"));
 };
-export default { signupSend, loginSend, loginGet, signupGet };
+const logoutGet = (req, res) => {
+  res.cookie("jwt", "", { maxAge: 1 });
+  res.redirect("/");
+};
+export default { signupSend, loginSend, loginGet, signupGet, logoutGet };

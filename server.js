@@ -13,14 +13,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
 const port = process.env.PORT || 3000;
+const projectRoot=path.join(__dirname,"..");
 dotenv.config();
 
 //middleware
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "./public")));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(projectRoot, "public")));
 app.use(cookieparser());
-app.use("/api", userroutes);
+app.use("/", userroutes);
 
 //mongoose
 mongoose
@@ -31,12 +32,10 @@ mongoose
   .catch((err) => console.error(err));
 
 //server routes
-app.get("/", function (req, res) {
-  res.sendFile(path.join(__dirname, "/public", "/signup.html"));
+app.get("/", authMiddleware.requireAuth, (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "random.html"));
 });
-
-//for
-// app.get("/api", authMiddleware, (req, res) => res.render("notes"));
+app.get("*", authMiddleware.checkUser);
 
 //port
 app.listen(port, () => {
