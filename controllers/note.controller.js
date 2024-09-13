@@ -1,8 +1,23 @@
-import express from "express";
-import noteModel from "../public/note.model.js";
-const router = express.Router();
+import path from "path";
+import { fileURLToPath } from "url";
+import notes from "../model/note.model.js";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
 
-// Read all notes
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// const projectRoot = path.join(__dirname, "..");
+
+const maxAge = 3 * 24 * 60 * 60;
+const createToken = (id) => {
+  return jwt.sign({ id }, process.env.JOT, {
+    expiresIn: maxAge,
+  });
+};
+
+
 router.get("/notes", async (req, res) => {
   try {
     const notes = await noteModel.find();
@@ -22,7 +37,7 @@ router.post("/makenote", async (req, res) => {
     if (req.body.title || req.body.content) {
       const makeNote = await noteModel.create(req.body);
       console.log(`Note created successfully:`, makeNote);
-      res.status(201).redirect("/");
+      res.status(201).json(makeNote);
     } else {
       console.log("Both title and content are empty");
       res.status(400).json({ message: "Title or content must not be empty" });
@@ -76,5 +91,3 @@ router.delete("/note/:id", async (req, res) => {
     res.status(500).send(error);
   }
 });
-
-export default router;
