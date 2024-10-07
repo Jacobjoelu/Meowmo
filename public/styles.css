@@ -607,8 +607,8 @@ video {
   height: 2.5rem;
 }
 
-.h-52 {
-  height: 13rem;
+.h-40 {
+  height: 10rem;
 }
 
 .h-6 {
@@ -619,8 +619,16 @@ video {
   height: 2rem;
 }
 
+.h-auto {
+  height: auto;
+}
+
 .h-screen {
   height: 100vh;
+}
+
+.min-h-60 {
+  min-height: 15rem;
 }
 
 .w-1\/2 {
@@ -643,6 +651,10 @@ video {
   width: 15rem;
 }
 
+.w-9\/12 {
+  width: 75%;
+}
+
 .w-full {
   width: 100%;
 }
@@ -653,6 +665,10 @@ video {
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+.resize-none {
+  resize: none;
 }
 
 .grid-cols-1 {
@@ -687,10 +703,10 @@ video {
   gap: 1rem;
 }
 
-.space-y-2 > :not([hidden]) ~ :not([hidden]) {
+.space-y-1 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
-  margin-top: calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(0.5rem * var(--tw-space-y-reverse));
+  margin-top: calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(0.25rem * var(--tw-space-y-reverse));
 }
 
 .space-y-4 > :not([hidden]) ~ :not([hidden]) {
@@ -744,14 +760,13 @@ video {
   background-color: rgb(187 247 208 / var(--tw-bg-opacity));
 }
 
-.bg-slate-200 {
-  --tw-bg-opacity: 1;
-  background-color: rgb(226 232 240 / var(--tw-bg-opacity));
-}
-
 .bg-slate-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(148 163 184 / var(--tw-bg-opacity));
+}
+
+.bg-transparent {
+  background-color: transparent;
 }
 
 .bg-yellow-200 {
@@ -781,11 +796,6 @@ video {
   padding-right: 0.5rem;
 }
 
-.px-4 {
-  padding-left: 1rem;
-  padding-right: 1rem;
-}
-
 .py-1 {
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
@@ -809,9 +819,14 @@ video {
   line-height: 1.25rem;
 }
 
-.text-gray-600 {
+.text-gray-300 {
   --tw-text-opacity: 1;
-  color: rgb(75 85 99 / var(--tw-text-opacity));
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
+.text-slate-200 {
+  --tw-text-opacity: 1;
+  color: rgb(226 232 240 / var(--tw-text-opacity));
 }
 
 .text-white {
@@ -849,6 +864,10 @@ video {
   background-color: rgb(100 116 139 / var(--tw-bg-opacity));
 }
 
+.focus\:flex-grow:focus {
+  flex-grow: 1;
+}
+
 .focus\:text-center:focus {
   text-align: center;
 }
@@ -861,6 +880,10 @@ video {
 @media (min-width: 768px) {
   .md\:grid-cols-2 {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:gap-16 {
+    gap: 4rem;
   }
 }
 

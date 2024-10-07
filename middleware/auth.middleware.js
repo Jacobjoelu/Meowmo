@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
+import User from "../model/user.model.js";
 dotenv.config();
 
 const requireAuth = (req, res, next) => {
@@ -17,7 +18,7 @@ const requireAuth = (req, res, next) => {
       }
     });
   } else {
-    res.redirect("/login");
+    res.redirect("/signup");
   }
 };
 const checkUser = (req, res, next) => {
@@ -29,7 +30,7 @@ const checkUser = (req, res, next) => {
         next();
       } else {
         let user = await User.findById(decodedToken.id);
-        res.locals.user = user;
+        req.user = user;
         next();
       }
     });
@@ -39,4 +40,4 @@ const checkUser = (req, res, next) => {
   }
 };
 
-export default { requireAuth, checkUser };
+export { requireAuth, checkUser };
