@@ -4,6 +4,7 @@ const noteSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
+    index: true,
   },
   title: String,
   content: String,
@@ -11,6 +12,11 @@ const noteSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  tags: [
+    {
+      type: String,
+    },
+  ],
   updatedAt: {
     type: Date,
     default: Date.now,

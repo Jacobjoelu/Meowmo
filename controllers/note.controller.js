@@ -11,20 +11,33 @@ const __dirname = path.dirname(__filename);
 
 const getNotes = async (req, res) => {
   try {
-    const notes = await NoteModel.find({ user: req.user._id });
-    const count = await NoteModel.countDocuments({ user: req.user._id });
-    console.log("Number of documents:", count);
-    console.log(`${notes}`);
+    if (!req.user || !req.user._id) {
+      console.log("No user found in request, please login");
+      return res.status(200).redirect("/");
+    }
+    // Fetch notes with proper user validation
+    const notes = await NoteModel.find({
+      user: req.user._id,
+    }).lean();
+    console.log("User ID:", req.user._id);
 
-    res.status(200).render("note", { notes: notes });
+    res.status(200).render("index", { notes: notes });
   } catch (error) {
     console.error("Error fetching notes:", error);
-    res.status(500).render("error", { message: "Error fetching notes" });
+    res.status(200).render("index", {
+      notes: [],
+      error: "Error fetching notes",
+    });
   }
 };
 
 // Create a new note
 const makeNote = async (req, res) => {
+  if (!req.user) {
+    console.log("No authenticated user found");
+    return res.status(401).redirect("/login");
+  }
+
   console.log("Received request body:", req.body);
   try {
     const userId = req.user._id;
@@ -35,22 +48,29 @@ const makeNote = async (req, res) => {
     const makeNote = await NoteModel.create(newNote);
     console.log(`Note created successfully:`, makeNote._id);
 
-    if (!makeNote.title && !makeNote.content) {
-      await fetch(`/api/note/${newNote.userId._id}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-      console.log(`Note was deleted`);
-      return res.status(400).redirect("/");
+    // Check if note is empty
+    if (!newNote.title && !newNote.content) {
+      console.log("Empty note detected, deleting...");
+      await NoteModel.findByIdAndDelete(newNote._id);
+      console.log("Empty note deleted");
+      return res.redirect("/");
     }
     res.status(201).redirect("/");
   } catch (error) {
-    console.error("Error creating note:", error);
-    res
-      .status(500)
-      .json({ message: "Error creating note", error: error.message });
+    console.error("Error in makeNote:", error);
+
+    // Send appropriate error response
+    if (error.name === "ValidationError") {
+      return res.status(400).json({
+        message: "Invalid note data",
+        error: error.message,
+      });
+    }
+
+    return res.status(500).json({
+      message: "Error creating note",
+      error: error.message,
+    });
   }
 };
 
