@@ -20,7 +20,7 @@ dotenv.config();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use("/api", crudRoutes);
+app.use("/api", requireAuth, crudRoutes);
 app.use("/", userRoutes);
 app.use(express.static("routes"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -30,7 +30,7 @@ app.set("views", path.join(__dirname, "views"));
 
 mongoose
   .connect(
-    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@meowmol.bhstbmo.mongodb.net/`
+    `mongodb+srv://${process.env.DB_U}:${process.env.DB_P}@meowmol.bhstbmo.mongodb.net/?retryWrites=true&w=majority&appName=Meowmol`
   )
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(`MongoDB connection error: ${err}`));

@@ -18,7 +18,7 @@ const requireAuth = (req, res, next) => {
       }
     });
   } else {
-    res.redirect("/signup");
+    res.redirect("/login");
   }
 };
 const checkUser = (req, res, next) => {

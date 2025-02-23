@@ -7,5 +7,7 @@ router.post("/signup", userControllers.signupSend);
 router.get("/login", userControllers.loginGet);
 router.post("/login", userControllers.loginSend);
 router.get("/logout", userControllers.logoutGet);
+router.get("/password-reset", userControllers.resetPGet);
+router.post("/password-reset", userControllers.resetPSend);
 
 export default router;

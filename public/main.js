@@ -29,20 +29,6 @@ closeBtn.addEventListener(
   false
 );
 
-// you can delete this
-// function saveNote() {
-//   let note = {
-//     title: noteTitle.value,
-//     details: noteContent.value,
-//   };
-
-//   // it'll only return note if either or both fields are not empty
-//   if (!note.title || !note.details) {
-//     return null;
-//   }
-//   return note;
-// }
-
 function resetInputs() {
   noteTitle.value = "";
   noteContent.value = "";
@@ -60,14 +46,72 @@ function stopNoteTaking() {
   takeNote.submit(); // you can delete this
 }
 
+// Get modal and form elements
+const editModal = document.getElementById("editModal");
+const editForm = document.getElementById("editForm");
+const closeModal = document.getElementById("closeModal");
+
+// Handle Edit button clicks
+document.querySelectorAll(".edit").forEach((button) => {
+  button.addEventListener("click", (e) => {
+    const noteId = e.target.getAttribute("data-id");
+    const noteTitle = document.getElementById(`title-${noteId}`).textContent;
+    const noteContent = document
+      .querySelector(`#title-${noteId}`)
+      .parentElement.nextElementSibling.textContent;
+
+    // Populate the modal form
+    document.getElementById("editNoteId").value = noteId;
+    document.getElementById("editTitle").value = noteTitle;
+    document.getElementById("editContent").value = noteContent;
+
+    // Show the modal
+    editModal.classList.remove("hidden");
+  });
+});
+
+// Handle Close button click
+closeModal.addEventListener("click", () => {
+  editModal.classList.add("hidden");
+});
+
+// Handle form submission
+editForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(editForm);
+  const data = Object.fromEntries(formData.entries());
+
+  try {
+    const response = await fetch(`/note/${data.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (response.ok) {
+      window.location.reload(); // Reload the page to reflect changes
+    } else {
+      alert("Failed to update the note");
+    }
+  } catch (error) {
+    console.error("Error updating note:", error);
+    alert("An error occurred while updating the note");
+  }
+});
+
+
 // Handle deletion
-document.querySelectorAll(".delete-btn").forEach((button) => {
+document.querySelectorAll(".delete").forEach((button) => {
   button.addEventListener("click", async (event) => {
     const noteId = event.target.getAttribute("data-id");
-    console.log(`Deleting note: ${noteId}`);
+    const confirmDelete = confirm("Are you sure you want to delete this note?");
+    if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`/api/note/${noteId}`, {
+      const response = await fetch(`/note/${noteId}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -75,15 +119,16 @@ document.querySelectorAll(".delete-btn").forEach((button) => {
       });
       const data = await response.json();
       if (response.ok) {
-        // Optionally, remove the note element from the DOM
-        event.target.closest(".note-item").remove();
-        console.log(data.message);
+        window.location.reload();
       }
+      console.log(`Deleting note: ${noteId}`);
     } catch (error) {
       console.error("Error:", error.message);
     }
   });
 });
+
+
 
 // // Render search form
 // document.addEventListener("DOMContentLoaded", () => {

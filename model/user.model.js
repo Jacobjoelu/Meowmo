@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import pkg from "validator";
-const { trim, isEmail } = pkg;
 import bcrypt from "bcryptjs";
+const { trim, isEmail } = pkg;
 
 // Use the trimmed and validated email in your code
 const { Schema, model } = mongoose;

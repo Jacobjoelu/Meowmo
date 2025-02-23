@@ -41,6 +41,7 @@ const loginSend = async (req, res) => {
   try {
     // Check if user existS
     const userLogin = await User.login(email, password);
+    
     const token = createToken(userLogin._id);
     res.cookie("jwt", token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).redirect("/");
@@ -63,6 +64,9 @@ const logoutGet = (req, res) => {
   res.cookie("jwt", "", { maxAge: 1 });
   res.redirect("/");
 };
+const resetPGet = async (req, res) => {
+  res.sendFile(path.join(projectRoot, "public", "reset.html"));
+};
 const resetPSend = async function (req, res) {
   const { email, password } = req.body;
   try {
@@ -75,6 +79,8 @@ const resetPSend = async function (req, res) {
     const hashedPassword = await bcrypt.hash(password, salt);
     user.password = hashedPassword;
     await user.save();
+    console.log(`Password for ${user.email} changed successfully`);
+    res.status(200).sendFile(path.join(projectRoot, "public", "login.html"));
   } catch (error) {
     res
       .status(500)
@@ -87,5 +93,6 @@ export default {
   resetPSend,
   loginGet,
   signupGet,
+  resetPGet,
   logoutGet,
 };

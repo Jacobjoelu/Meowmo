@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Meowmo Notes</title>
     <link rel="stylesheet" href="styles.css" />
+    <script src="./main.js" defer></script>
   </head>
   <body class="bg-neutral-900">
     <div class="nav"></div>
@@ -40,10 +41,11 @@
       <div
         class="columns-2 md:columns-3 lg:columns-4 xl:columns-5 gap-4 mt-8 lg:px-12"
       >
-        <%- include('note', { notes: notes }) %>
+        <% if (notes && notes.length > 0) { %> <%- include('note', { notes:
+        notes }) %> <% } else { %>
+        <p class="text-neutral-400">No notes found.</p>
+        <% } %>
       </div>
     </div>
-
-    <script src="./main.js"></script>
   </body>
 </html>

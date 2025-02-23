@@ -15,15 +15,19 @@ const getNotes = async (req, res) => {
       console.log("No user found in request, please login");
       return res.status(200).redirect("/");
     }
+
     // Fetch notes with proper user validation
     const notes = await NoteModel.find({
       user: req.user._id,
     }).lean();
+
     console.log("User ID:", req.user._id);
 
-    res.status(200).render("index", { notes: notes });
+    // Ensure notes is always defined, even if empty
+    res.status(200).render("index", { notes: notes || [] });
   } catch (error) {
     console.error("Error fetching notes:", error);
+    // Pass an empty array if there's an error
     res.status(200).render("index", {
       notes: [],
       error: "Error fetching notes",
